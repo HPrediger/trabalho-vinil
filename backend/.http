@@ -1,0 +1,69 @@
+@customerToken = COLARAQUI
+@adminToken = COLARAQUI
+
+### Customer pode consultar
+
+GET http://localhost:3000/api/vinyl-records
+Authorization: Bearer {{customerToken}}
+
+### Customer NÃO pode cadastrar
+
+POST http://localhost:3000/api/vinyl-records
+Content-Type: application/json
+Authorization: Bearer {{customerToken}}
+
+{
+    "title": "Teste",
+    "releaseYear": 2000,
+    "price": 100,
+    "condition": "Novo",
+    "rpmSpeed": 33,
+    "stockQuantity": 1,
+    "artistId": 1,
+    "genreId": 1
+}
+
+### Admin pode cadastrar
+
+POST http://localhost:3000/api/vinyl-records
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+    "title": "Disco Admin Teste",
+    "releaseYear": 2000,
+    "price": 100,
+    "condition": "Novo",
+    "rpmSpeed": 33,
+    "stockQuantity": 1,
+    "artistId": 1,
+    "genreId": 1
+}
+
+### Teste artists C
+
+POST http://localhost:3000/api/artists
+Content-Type: application/json
+Authorization: Bearer {{customerToken}}
+
+{
+    "name": "Teste Customer",
+    "country": "Brasil",
+    "bio": "Não deveria ser criado."
+}
+
+### Teste artists A
+
+POST http://localhost:3000/api/artists
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+    "name": "Teste Admin",
+    "country": "Brasil",
+    "bio": "Criado pelo administrador."
+}
+
+### Tentar excluir Pink Floyd
+DELETE http://localhost:3000/api/artists/1
+Authorization: Bearer {{adminToken}}

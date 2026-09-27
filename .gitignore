@@ -1,0 +1,21 @@
+# Dependências
+**/node_modules/
+
+# Builds
+**/dist/
+**/.next/
+
+# Variáveis de ambiente
+**/.env
+!**/.env.example
+
+# Banco SQLite local
+**/prisma/dev.db
+**/prisma/dev.db-journal
+
+# Logs
+*.log
+
+# Sistema
+.DS_Store
+Thumbs.db
