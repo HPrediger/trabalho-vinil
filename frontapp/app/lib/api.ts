@@ -153,3 +153,44 @@ export async function getArtists(): Promise<Artist[]> {
 
   return response.json();
 }
+
+
+// ---------- Detalhe do disco ----------
+
+export interface VinylDetail extends Vinyl {
+  stockQuantity: number;
+  genreId: number;
+  artistCountry: string;
+  artistBio: string;
+}
+
+interface ApiVinylRecordDetail extends ApiVinylRecord {
+  stockQuantity: number;
+  genreId: number;
+  artist: { name: string; country: string; bio: string };
+}
+
+// Devolve null quando o disco não existe (404)
+export async function getVinyl(id: number): Promise<VinylDetail | null> {
+  const response = await fetch(`${API_URL}/vinyl-records/${id}`, {
+    cache: "no-store",
+  });
+
+  if (response.status === 404) {
+    return null;
+  }
+
+  if (!response.ok) {
+    throw new Error("Falha ao buscar disco");
+  }
+
+  const data: ApiVinylRecordDetail = await response.json();
+
+  return {
+    ...toVinyl(data),
+    stockQuantity: data.stockQuantity,
+    genreId: data.genreId,
+    artistCountry: data.artist.country,
+    artistBio: data.artist.bio,
+  };
+}

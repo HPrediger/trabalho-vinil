@@ -39,6 +39,25 @@ const genres = [
   },
 ];
 
+const covers = {
+  'Abbey Road': '/images/abbeyroad.jpg',
+  'Kind of Blue': '/images/KindofBlue.jpg',
+  'Rumours': '/images/Rumours.png',
+  'The Dark Side of the Moon': '/images/Dark_Side_of_the_Moon.png',
+  'Blue Train': '/images/bluetrain.jpg',
+  'Born Under a Bad Sign': '/images/BornUnder.jpg',
+  'Gita': '/images/Gita.jpg',
+  'Elis & Tom': '/images/Elis_Regina.jpg',
+  'Smack Yo\'': '/images/smack_yo.jpg',
+  'Warning': '/images/Warning.jpg',
+  'Thriller': '/images/Thriller.jpg',
+  'Future Nostalgia': '/images/Future_Nostalgia.png',
+  'Illmatic': '/images/Illmatic.jpg',
+  'The Chronic': '/images/The_Chronic.jpg',
+  'Legend': '/images/Legend.jpg',
+  'Catch a Fire': '/images/CatchaFire.jpg',
+};
+
 const records = [
   // ROCK
   {
@@ -272,7 +291,17 @@ async function main() {
       },
     });
 
+    const coverUrl = covers[r.title] ?? null;
+
     if (exists) {
+      // Mantém as capas em dia ao rodar o seed de novo
+      if (coverUrl && exists.coverUrl !== coverUrl) {
+        await prisma.vinylRecord.update({
+          where: { id: exists.id },
+          data: { coverUrl },
+        });
+      }
+
       continue;
     }
 
@@ -286,6 +315,7 @@ async function main() {
         stockQuantity: r.stockQuantity,
         artistId: artist.id,
         genreId: genre.id,
+        coverUrl,
       },
     });
   }

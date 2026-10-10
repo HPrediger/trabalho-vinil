@@ -1,5 +1,5 @@
 import styles from "./page.module.css";
-
+import Link from "next/link";
 import Header from "./components/Header/Header";
 import Hero from "./components/Hero/Hero";
 import VinylCard from "./components/VinylCard/VinylCard";
@@ -31,9 +31,7 @@ export default async function Home() {
               <h2>Discos em destaque</h2>
             </div>
 
-            <a href="/vinyls" className={styles.viewAll}>
-              Ver todos →
-            </a>
+            <Link href="/vinyls" className={styles.viewAll}>...</Link>
           </div>
 
           <div className={styles.vinylGrid}>

@@ -2,6 +2,18 @@
   cursor: pointer;
 }
 
+.link {
+  display: block;
+
+  color: inherit;
+  text-decoration: none;
+}
+
+.link:focus-visible {
+  outline: 2px solid #a43d27;
+  outline-offset: 6px;
+}
+
 .cover {
   height: 300px;
   background: #ded7cb;

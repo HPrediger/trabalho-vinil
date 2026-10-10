@@ -3,6 +3,7 @@ import SearchBox from "../components/SearchBox/SearchBox";
 import Header from "../components/Header/Header";
 import VinylCard from "../components/VinylCard/VinylCard";
 import { getGenres, getVinyls } from "../lib/api";
+import Link from "next/link";
 
 interface VinylsPageProps {
   searchParams: Promise<{
@@ -120,7 +121,7 @@ export default async function VinylsPage({
             <p>
               Tente buscar outro álbum ou artista, ou escolha outro gênero.
             </p>
-            <a href="/vinyls">Ver todos os discos</a>
+            <Link href="/vinyls">...</Link>
           </div>
         )}
       </main>

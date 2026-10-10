@@ -1,4 +1,4 @@
-
+import Link from "next/link";
 import styles from "./VinylCard.module.css";
 
 interface Vinyl {
@@ -20,40 +20,42 @@ interface VinylCardProps {
 export default function VinylCard({ vinyl }: VinylCardProps) {
   return (
     <article className={styles.card}>
-      <div className={styles.cover}>
-        {vinyl.coverUrl ? (
-          <img
-            src={vinyl.coverUrl}
-            alt={`Capa do álbum ${vinyl.title}`}
-            className={styles.coverImage}
-          />
-        ) : (
-          <div className={styles.record}>
-            <div className={styles.recordCenter} />
-          </div>
-        )}
+      <Link href={`/vinyls/${vinyl.id}`} className={styles.link}>
+        <div className={styles.cover}>
+          {vinyl.coverUrl ? (
+            <img
+              src={vinyl.coverUrl}
+              alt={`Capa do álbum ${vinyl.title}`}
+              className={styles.coverImage}
+            />
+          ) : (
+            <div className={styles.record}>
+              <div className={styles.recordCenter} />
+            </div>
+          )}
 
-        <span className={styles.genre}>
-          {vinyl.genre}
-        </span>
-      </div>
-
-      <div className={styles.info}>
-        <div>
-          <h3>{vinyl.title}</h3>
-          <p>{vinyl.artist}</p>
+          <span className={styles.genre}>
+            {vinyl.genre}
+          </span>
         </div>
 
-        <strong>
-          R$ {vinyl.price.toFixed(2).replace(".", ",")}
-        </strong>
-      </div>
+        <div className={styles.info}>
+          <div>
+            <h3>{vinyl.title}</h3>
+            <p>{vinyl.artist}</p>
+          </div>
 
-      <div className={styles.details}>
-        <span>{vinyl.releaseYear}</span>
-        <span>{vinyl.condition}</span>
-        <span>{vinyl.rpmSpeed} RPM</span>
-      </div>
+          <strong>
+            R$ {vinyl.price.toFixed(2).replace(".", ",")}
+          </strong>
+        </div>
+
+        <div className={styles.details}>
+          <span>{vinyl.releaseYear}</span>
+          <span>{vinyl.condition}</span>
+          <span>{vinyl.rpmSpeed} RPM</span>
+        </div>
+      </Link>
     </article>
   );
 }

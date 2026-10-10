@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Vinyl Store",
-  description: "Loja de discos de vinyl",
+  description: "Loja de discos de vinil",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
