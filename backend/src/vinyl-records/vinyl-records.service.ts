@@ -51,6 +51,7 @@ export class VinylRecordsService {
                 stockQuantity: dto.stockQuantity,
                 artistId: dto.artistId,
                 genreId: dto.genreId,
+                coverUrl: dto.coverUrl,
             },
 
             include: {
@@ -187,6 +188,7 @@ export class VinylRecordsService {
                 stockQuantity: dto.stockQuantity,
                 artistId: dto.artistId,
                 genreId: dto.genreId,
+                coverUrl: dto.coverUrl,
             },
 
             include: {

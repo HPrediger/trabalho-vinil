@@ -1,11 +1,60 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import styles from "./login.module.css";
+import { loginAction, registerAction } from "../lib/auth-actions";
 
 export default function LoginPage() {
+  const router = useRouter();
+
   const [isRegister, setIsRegister] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  function switchMode(registerMode: boolean) {
+    setIsRegister(registerMode);
+    setError("");
+  }
+
+    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setError("");
+
+    const form = new FormData(event.currentTarget);
+
+    const name = String(form.get("name") ?? "").trim();
+    const email = String(form.get("email") ?? "").trim();
+    const password = String(form.get("password") ?? "");
+    const confirmPassword = String(form.get("confirmPassword") ?? "");
+    const remember = form.get("remember") === "on";
+
+    if (isRegister && password !== confirmPassword) {
+      setError("As senhas não coincidem.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const result = isRegister
+        ? await registerAction({ name, email, password })
+        : await loginAction({ email, password, remember });
+
+      if (result.error) {
+        setError(result.error);
+        return;
+      }
+
+      router.push("/");
+      router.refresh();
+    } catch {
+      setError("Não foi possível concluir a operação. Tente novamente.");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <main className={styles.page}>
@@ -65,7 +114,7 @@ export default function LoginPage() {
             <button
               type="button"
               className={!isRegister ? styles.activeTab : ""}
-              onClick={() => setIsRegister(false)}
+              onClick={() => switchMode(false)}
             >
               Entrar
             </button>
@@ -73,16 +122,13 @@ export default function LoginPage() {
             <button
               type="button"
               className={isRegister ? styles.activeTab : ""}
-              onClick={() => setIsRegister(true)}
+              onClick={() => switchMode(true)}
             >
               Criar conta
             </button>
           </div>
 
-          <form
-            className={styles.form}
-            onSubmit={(event) => event.preventDefault()}
-          >
+          <form className={styles.form} onSubmit={handleSubmit}>
             {isRegister && (
               <div className={styles.field}>
                 <label htmlFor="name">Nome completo</label>
@@ -92,6 +138,7 @@ export default function LoginPage() {
                   type="text"
                   placeholder="Como podemos te chamar?"
                   autoComplete="name"
+                  minLength={3}
                   required
                 />
               </div>
@@ -119,7 +166,7 @@ export default function LoginPage() {
                 autoComplete={
                   isRegister ? "new-password" : "current-password"
                 }
-                minLength={isRegister ? 8 : undefined}
+                minLength={isRegister ? 8 : 6}
                 required
               />
             </div>
@@ -160,8 +207,22 @@ export default function LoginPage() {
               </div>
             )}
 
-            <button type="submit" className={styles.submitButton}>
-              {isRegister ? "Criar minha conta" : "Entrar"}
+            {error && (
+              <p className={styles.error} role="alert">
+                {error}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              className={styles.submitButton}
+              disabled={loading}
+            >
+              {loading
+                ? "Aguarde..."
+                : isRegister
+                  ? "Criar minha conta"
+                  : "Entrar"}
               <span>→</span>
             </button>
           </form>
@@ -170,7 +231,7 @@ export default function LoginPage() {
             {isRegister ? "Já tem uma conta?" : "Ainda não tem uma conta?"}{" "}
             <button
               type="button"
-              onClick={() => setIsRegister(!isRegister)}
+              onClick={() => switchMode(!isRegister)}
             >
               {isRegister ? "Entrar" : "Cadastre-se"}
             </button>

@@ -1,4 +1,4 @@
-@token = COLARAQUI
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsImVtYWlsIjoidXN1YXJpb0B1cGYuYnIiLCJuYW1lIjoidXN1YXJpbyIsImlhdCI6MTc5MTQwMzYwNCwiZXhwIjoxNzkxNDkwMDA0fQ.HhxPNTHCV26uTtOKY0R1bELrNakEqFUW5WR60anc948
 
 ### Criar disco - Pink Floyd
 
@@ -58,7 +58,7 @@ Authorization: Bearer {{token}}
 
 ### Buscar disco por ID
 
-GET http://localhost:3000/api/vinyl-records/1
+GET http://localhost:3000/api/vinyl-records/9
 Authorization: Bearer {{token}}
 
 ### Disco inexistente
@@ -153,13 +153,12 @@ Authorization: Bearer {{token}}
 
 ### Atualizar preço e estoque
 
-PUT http://localhost:3000/api/vinyl-records/1
+PUT http://localhost:3000/api/vinyl-records/9
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "price": 219.90,
-    "stockQuantity": 8
+  "coverUrl": "/images/smack_yo.jpg"
 }
 
 ### Criar disco temporário

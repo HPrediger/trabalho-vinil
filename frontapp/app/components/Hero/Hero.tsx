@@ -1,4 +1,5 @@
 import styles from "./Hero.module.css";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -17,9 +18,9 @@ export default function Hero() {
           sua coleção.
         </p>
 
-        <button className={styles.heroButton}>
+        <Link href="/vinyls" className={styles.heroButton}>
           Explorar coleção
-        </button>
+        </Link>
       </div>
     </section>
   );

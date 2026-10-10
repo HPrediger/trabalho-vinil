@@ -12,8 +12,10 @@ import {
 import { CreateUserDto } from '../dtos/create-user-dto';
 import { UpdateUserDto } from '../dtos/update-user-dto';
 import { UsersService } from './users.service';
+import { Roles } from '../auth/roles.decorator';
 
 @Controller('users')
+@Roles('ADMIN')
 export class UsersController {
     constructor(private usersService: UsersService) { }
 

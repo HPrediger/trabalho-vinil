@@ -48,4 +48,8 @@ export class UpdateVinylRecordDto {
     @IsInt()
     @Min(1)
     genreId?: number;
+
+    @IsOptional()
+    @IsString()
+    coverUrl?: string;
 }

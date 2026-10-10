@@ -2,9 +2,11 @@ import {
     IsIn,
     IsInt,
     IsNumber,
+    IsOptional,
     IsString,
     Min,
     MinLength,
+    
 } from 'class-validator';
 
 export class CreateVinylRecordDto {
@@ -39,4 +41,8 @@ export class CreateVinylRecordDto {
     @IsInt()
     @Min(1)
     genreId: number = 0;
+
+    @IsOptional()
+    @IsString()
+    coverUrl?: string;
 }

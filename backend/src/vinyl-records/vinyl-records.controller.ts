@@ -15,6 +15,7 @@ import { UpdateVinylRecordDto } from '../dtos/update-vinyl-record-dto';
 import { VinylRecordsService } from './vinyl-records.service';
 import { FilterVinylRecordsDto } from '../dtos/filter-vinyl-records-dto';
 import { Roles } from '../auth/roles.decorator';
+import { Public } from '../auth/public.decorator';
 
 @Controller('vinyl-records')
 export class VinylRecordsController {
@@ -32,7 +33,7 @@ export class VinylRecordsController {
             dto,
         );
     }
-
+    @Public()
     @Get()
     async findAll(
         @Query() filters: FilterVinylRecordsDto,
@@ -42,6 +43,7 @@ export class VinylRecordsController {
         );
     }
 
+    @Public()
     @Get(':id')
     async findOne(
         @Param('id', ParseIntPipe) id: number,

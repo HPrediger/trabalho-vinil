@@ -55,6 +55,7 @@ model VinylRecord {
   condition     String
   rpmSpeed      Int
   stockQuantity Int
+  coverUrl      String?
 
   artistId Int
   genreId  Int

@@ -1,27 +1,48 @@
 import Link from "next/link";
 import styles from "./Header.module.css";
+import { getSession } from "../../lib/session";
+import { logoutAction } from "../../lib/auth-actions";
+import HeaderSearch from "./HeaderSearch";
+import GenresLink from "./GenresLink";
 
-export default function Header() {
+export default async function Header() {
+  const user = await getSession();
+
   return (
     <header className={styles.header}>
-      <div className={styles.logo}>
+      <Link href="/" className={styles.logo}>
         <span>VINYL</span>
         <strong>STORE</strong>
-      </div>
+      </Link>
 
       <nav>
-        <a href="/">Início</a>
-        <a href="/vinyls">Discos</a>
+        <Link href="/">Início</Link>
+        <Link href="/vinyls">Discos</Link>
         <a href="/artists">Artistas</a>
-        <a href="/genres">Gêneros</a>
+        <GenresLink />
       </nav>
 
       <div className={styles.actions}>
-        <button aria-label="Buscar">⌕</button>
+        <HeaderSearch />
         <button aria-label="Carrinho">🛒</button>
-        <Link href="/login" className={styles.login}>
-          Entrar
-        </Link>
+
+        {user ? (
+          <>
+            <span className={styles.userName}>
+              Olá, {user.name.split(" ")[0]}
+            </span>
+
+            <form action={logoutAction} className={styles.logoutForm}>
+              <button type="submit" className={styles.logout}>
+                Sair
+              </button>
+            </form>
+          </>
+        ) : (
+          <Link href="/login" className={styles.login}>
+            Entrar
+          </Link>
+        )}
       </div>
     </header>
   );

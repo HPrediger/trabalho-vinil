@@ -3,53 +3,16 @@ import styles from "./page.module.css";
 import Header from "./components/Header/Header";
 import Hero from "./components/Hero/Hero";
 import VinylCard from "./components/VinylCard/VinylCard";
+import { getGenres, getVinyls } from "./lib/api";
 
-const vinyls = [
-  {
-    id: 1,
-    title: "Abbey Road",
-    artist: "The Beatles",
-    genre: "Rock",
-    releaseYear: 1969,
-    price: 149.9,
-    condition: "Excelente",
-    rpmSpeed: 33,
-  },
-  {
-    id: 2,
-    title: "Kind of Blue",
-    artist: "Miles Davis",
-    genre: "Jazz",
-    releaseYear: 1959,
-    price: 179.9,
-    condition: "Muito bom",
-    rpmSpeed: 33,
-  },
-  {
-    id: 3,
-    title: "Rumours",
-    artist: "Fleetwood Mac",
-    genre: "Rock",
-    releaseYear: 1977,
-    price: 129.9,
-    condition: "Excelente",
-    rpmSpeed: 33,
-  },
-  {
-    id: 4,
-    title: "The Dark Side of the Moon",
-    artist: "Pink Floyd",
-    genre: "Rock",
-    releaseYear: 1973,
-    price: 199.9,
-    condition: "Excelente",
-    rpmSpeed: 33,
-  },
-];
+export default async function Home() {
+  const [vinyls, genres] = await Promise.all([
+    getVinyls({ inStock: "true" })
+      .then((list) => list.slice(0, 4))
+      .catch(() => []),
+    getGenres().catch(() => []),
+  ]);
 
-const genres = ["Rock", "Jazz", "Blues", "MPB"];
-
-export default function Home() {
   return (
     <>
       <Header />
@@ -81,7 +44,7 @@ export default function Home() {
         </section>
 
         {/* Gêneros musicais */}
-        <section className={styles.genres}>
+        <section id="genres" className={styles.genres}>
           <div className={styles.sectionHeader}>
             <div>
               <span className={styles.sectionLabel}>
@@ -95,15 +58,15 @@ export default function Home() {
           <div className={styles.genreGrid}>
             {genres.map((genre, index) => (
               <a
-                href={`/genres?name=${encodeURIComponent(genre)}`}
+                href={`/vinyls?genreId=${genre.id}`}
                 className={styles.genreCard}
-                key={genre}
+                key={genre.id}
               >
                 <span>
                   {String(index + 1).padStart(2, "0")}
                 </span>
 
-                <h3>{genre}</h3>
+                <h3>{genre.name}</h3>
 
                 <span className={styles.genreArrow}>↗</span>
               </a>

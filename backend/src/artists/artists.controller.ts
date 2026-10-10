@@ -13,6 +13,7 @@ import { CreateArtistDto } from '../dtos/create-artist-dto';
 import { UpdateArtistDto } from '../dtos/update-artist-dto';
 import { ArtistsService } from './artists.service';
 import { Roles } from '../auth/roles.decorator';
+import { Public } from '../auth/public.decorator';
 
 @Controller('artists')
 export class ArtistsController {
@@ -28,11 +29,13 @@ export class ArtistsController {
         return await this.artistsService.create(dto);
     }
 
+    @Public()
     @Get()
     async findAll() {
         return await this.artistsService.findAll();
     }
 
+    @Public()
     @Get(':id')
     async findOne(
         @Param('id', ParseIntPipe) id: number,

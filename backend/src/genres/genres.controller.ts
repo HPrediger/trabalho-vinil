@@ -13,6 +13,7 @@ import { CreateGenreDto } from '../dtos/create-genre-dto';
 import { UpdateGenreDto } from '../dtos/update-genre-dto';
 import { GenresService } from './genres.service';
 import { Roles } from '../auth/roles.decorator';
+import { Public } from '../auth/public.decorator';
 
 @Controller('genres')
 export class GenresController {
@@ -28,11 +29,13 @@ export class GenresController {
         return await this.genresService.create(dto);
     }
 
+    @Public()
     @Get()
     async findAll() {
         return await this.genresService.findAll();
     }
 
+    @Public()
     @Get(':id')
     async findOne(
         @Param('id', ParseIntPipe) id: number,
