@@ -107,9 +107,7 @@ export default async function VinylPage({ params }: VinylPageProps) {
   const stock = stockInfo(vinyl.stockQuantity);
 
   // Outros discos do mesmo gênero
-  const related = (
-    await getVinyls({ genreId: vinyl.genreId }).catch(() => [])
-  )
+  const related = (await getVinyls({ genreId: vinyl.genreId }).catch(() => []))
     .filter((item) => item.id !== vinyl.id)
     .slice(0, 4);
 
@@ -201,9 +199,7 @@ export default async function VinylPage({ params }: VinylPageProps) {
             <div className={styles.actions}>
               <Link href="/vinyls">← Voltar ao catálogo</Link>
 
-              <Link
-                href={`/vinyls?search=${encodeURIComponent(vinyl.artist)}`}
-              >
+              <Link href={`/vinyls?search=${encodeURIComponent(vinyl.artist)}`}>
                 Mais de {vinyl.artist}
               </Link>
             </div>

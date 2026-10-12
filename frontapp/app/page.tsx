@@ -24,14 +24,14 @@ export default async function Home() {
         <section className={styles.section}>
           <div className={styles.sectionHeader}>
             <div>
-              <span className={styles.sectionLabel}>
-                NOSSA COLEÇÃO
-              </span>
+              <span className={styles.sectionLabel}>NOSSA COLEÇÃO</span>
 
               <h2>Discos em destaque</h2>
             </div>
 
-            <Link href="/vinyls" className={styles.viewAll}>...</Link>
+            <Link href="/vinyls" className={styles.viewAll}>
+              ...
+            </Link>
           </div>
 
           <div className={styles.vinylGrid}>
@@ -45,9 +45,7 @@ export default async function Home() {
         <section id="genres" className={styles.genres}>
           <div className={styles.sectionHeader}>
             <div>
-              <span className={styles.sectionLabel}>
-                EXPLORE
-              </span>
+              <span className={styles.sectionLabel}>EXPLORE</span>
 
               <h2>Encontre seu estilo</h2>
             </div>
@@ -60,9 +58,7 @@ export default async function Home() {
                 className={styles.genreCard}
                 key={genre.id}
               >
-                <span>
-                  {String(index + 1).padStart(2, "0")}
-                </span>
+                <span>{String(index + 1).padStart(2, "0")}</span>
 
                 <h3>{genre.name}</h3>
 
@@ -75,9 +71,7 @@ export default async function Home() {
         {/* Sobre a loja */}
         <section className={styles.about}>
           <div>
-            <span className={styles.sectionLabel}>
-              SOBRE A LOJA
-            </span>
+            <span className={styles.sectionLabel}>SOBRE A LOJA</span>
 
             <h2>
               Para quem acredita que
@@ -87,10 +81,9 @@ export default async function Home() {
           </div>
 
           <p>
-            Reunimos discos clássicos e especiais para
-            colecionadores, amantes da música e para quem
-            deseja descobrir a experiência de ouvir um álbum
-            do começo ao fim.
+            Reunimos discos clássicos e especiais para colecionadores, amantes
+            da música e para quem deseja descobrir a experiência de ouvir um
+            álbum do começo ao fim.
           </p>
         </section>
       </main>

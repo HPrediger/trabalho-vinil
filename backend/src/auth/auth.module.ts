@@ -1,14 +1,9 @@
 import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 
-import {
-    JwtModule,
-} from '@nestjs/jwt';
+import { JwtModule } from '@nestjs/jwt';
 
-import {
-    ConfigModule,
-    ConfigService,
-} from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
@@ -18,49 +13,40 @@ import { RolesGuard } from './roles.guard';
 import { UsersModule } from '../users/users.module';
 
 @Module({
-    imports: [
-        ConfigModule,
+  imports: [
+    ConfigModule,
 
-        UsersModule,
+    UsersModule,
 
-        JwtModule.registerAsync({
-            inject: [ConfigService],
+    JwtModule.registerAsync({
+      inject: [ConfigService],
 
-            useFactory: (
-                configService: ConfigService,
-            ) => ({
-                secret:
-                    configService.get<string>(
-                        'JWT_SECRET',
-                    ) || 'dev-secret',
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_SECRET') || 'dev-secret',
 
-                signOptions: {
-                    expiresIn: '1d',
-                },
-            }),
-        }),
-    ],
-
-    controllers: [
-        AuthController,
-    ],
-
-    providers: [
-        AuthService,
-
-        {
-            provide: APP_GUARD,
-            useClass: JwtAuthGuard,
+        signOptions: {
+          expiresIn: '1d',
         },
+      }),
+    }),
+  ],
 
-        {
-            provide: APP_GUARD,
-            useClass: RolesGuard,
-        },
-    ],
+  controllers: [AuthController],
 
-    exports: [
-        JwtModule,
-    ],
+  providers: [
+    AuthService,
+
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
+
+  exports: [JwtModule],
 })
-export class AuthModule { }
+export class AuthModule {}

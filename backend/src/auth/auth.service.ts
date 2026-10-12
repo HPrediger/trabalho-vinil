@@ -1,7 +1,4 @@
-import {
-    Injectable,
-    UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
@@ -11,70 +8,62 @@ import { RegisterDto } from '../dtos/register-dto';
 
 @Injectable()
 export class AuthService {
-    constructor(
-        private jwt: JwtService,
-        private usersService: UsersService,
-    ) {}
+  constructor(
+    private jwt: JwtService,
+    private usersService: UsersService,
+  ) {}
 
-    async login(email: string, password: string) {
-        const user = await this.validate(email, password);
+  async login(email: string, password: string) {
+    const user = await this.validate(email, password);
 
-        if (!user) {
-            throw new UnauthorizedException(
-                'Credenciais inválidas',
-            );
-        }
-
-        const payload = {
-            sub: user.id,
-            email: user.email,
-            name: user.name,
-            role: user.role,
-        };
-
-        return {
-            access_token: await this.jwt.signAsync(payload),
-            user: payload,
-        };
+    if (!user) {
+      throw new UnauthorizedException('Credenciais inválidas');
     }
 
-    async validate(email: string, password: string) {
-        const user = await this.usersService.findByEmail(email);
+    const payload = {
+      sub: user.id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
+    };
 
-        if (!user) {
-            return null;
-        }
+    return {
+      access_token: await this.jwt.signAsync(payload),
+      user: payload,
+    };
+  }
 
-        const passwordIsValid = await bcrypt.compare(
-            password,
-            user.passwordHash,
-        );
+  async validate(email: string, password: string) {
+    const user = await this.usersService.findByEmail(email);
 
-        if (!passwordIsValid) {
-            return null;
-        }
-
-        const {
-            passwordHash: _,
-            ...safeUser
-        } = user;
-
-        return safeUser;
+    if (!user) {
+      return null;
     }
 
-    async register(dto: RegisterDto) {
-        const user = await this.usersService.create(dto);
+    const passwordIsValid = await bcrypt.compare(password, user.passwordHash);
 
-        const payload = {
-            sub: user.id,
-            email: user.email,
-            name: user.name,
-            role: user.role,
-        };
-
-        return {
-            access_token: await this.jwt.signAsync(payload),
-            user: payload,
-        };
+    if (!passwordIsValid) {
+      return null;
     }
+
+    const { passwordHash: _, ...safeUser } = user;
+
+    return safeUser;
+  }
+
+  async register(dto: RegisterDto) {
+    const user = await this.usersService.create(dto);
+
+    const payload = {
+      sub: user.id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
+    };
+
+    return {
+      access_token: await this.jwt.signAsync(payload),
+      user: payload,
+    };
+  }
 }

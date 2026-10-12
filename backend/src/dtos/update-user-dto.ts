@@ -3,6 +3,7 @@ import {
   IsOptional,
   IsString,
   MinLength,
+  IsIn,
 } from 'class-validator';
 
 export class UpdateUserDto {
@@ -18,4 +19,8 @@ export class UpdateUserDto {
   @IsString()
   @MinLength(6)
   password?: string;
+
+  @IsOptional()
+  @IsIn(['ADMIN', 'CUSTOMER'])
+  role?: string;
 }

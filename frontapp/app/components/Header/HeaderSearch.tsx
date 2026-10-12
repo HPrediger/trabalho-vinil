@@ -26,11 +26,7 @@ export default function HeaderSearch() {
 
   return (
     <div className={styles.root} ref={rootRef}>
-      <form
-        className={styles.form}
-        action="/vinyls"
-        role="search"
-      >
+      <form className={styles.form} action="/vinyls" role="search">
         <div className={styles.searchWrapper}>
           <SearchBox
             name="search"
@@ -40,16 +36,11 @@ export default function HeaderSearch() {
             className={styles.search}
           />
 
-          <button
-            type="submit"
-            className={styles.submit}
-            aria-label="Buscar"
-          >
+          <button type="submit" className={styles.submit} aria-label="Buscar">
             ⌕
           </button>
         </div>
       </form>
-
     </div>
   );
 }

@@ -4,12 +4,8 @@ import { VinylRecordsController } from './vinyl-records.controller';
 import { VinylRecordsService } from './vinyl-records.service';
 
 @Module({
-    controllers: [
-        VinylRecordsController,
-    ],
+  controllers: [VinylRecordsController],
 
-    providers: [
-        VinylRecordsService,
-    ],
+  providers: [VinylRecordsService],
 })
 export class VinylRecordsModule {}

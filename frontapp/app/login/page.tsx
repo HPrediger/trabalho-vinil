@@ -18,7 +18,7 @@ export default function LoginPage() {
     setError("");
   }
 
-    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
 
@@ -66,9 +66,7 @@ export default function LoginPage() {
         </Link>
 
         <div className={styles.visualContent}>
-          <span className={styles.eyebrow}>
-            A MÚSICA NUNCA SAI DE MODA
-          </span>
+          <span className={styles.eyebrow}>A MÚSICA NUNCA SAI DE MODA</span>
 
           <h1>
             Sua coleção.
@@ -79,8 +77,8 @@ export default function LoginPage() {
           </h1>
 
           <p>
-            Descubra discos especiais e encontre os álbuns
-            que merecem fazer parte da sua história.
+            Descubra discos especiais e encontre os álbuns que merecem fazer
+            parte da sua história.
           </p>
         </div>
 
@@ -100,9 +98,7 @@ export default function LoginPage() {
             {isRegister ? "FAÇA PARTE DA COMUNIDADE" : "BEM-VINDO DE VOLTA"}
           </span>
 
-          <h2>
-            {isRegister ? "Crie sua conta." : "Entre na sua conta."}
-          </h2>
+          <h2>{isRegister ? "Crie sua conta." : "Entre na sua conta."}</h2>
 
           <p className={styles.description}>
             {isRegister
@@ -163,9 +159,7 @@ export default function LoginPage() {
                 name="password"
                 type="password"
                 placeholder="Digite sua senha"
-                autoComplete={
-                  isRegister ? "new-password" : "current-password"
-                }
+                autoComplete={isRegister ? "new-password" : "current-password"}
                 minLength={isRegister ? 8 : 6}
                 required
               />
@@ -173,9 +167,7 @@ export default function LoginPage() {
 
             {isRegister && (
               <div className={styles.field}>
-                <label htmlFor="confirmPassword">
-                  Confirmar senha
-                </label>
+                <label htmlFor="confirmPassword">Confirmar senha</label>
                 <input
                   id="confirmPassword"
                   name="confirmPassword"
@@ -229,10 +221,7 @@ export default function LoginPage() {
 
           <p className={styles.switchText}>
             {isRegister ? "Já tem uma conta?" : "Ainda não tem uma conta?"}{" "}
-            <button
-              type="button"
-              onClick={() => switchMode(!isRegister)}
-            >
+            <button type="button" onClick={() => switchMode(!isRegister)}>
               {isRegister ? "Entrar" : "Cadastre-se"}
             </button>
           </p>
@@ -243,8 +232,8 @@ export default function LoginPage() {
         </div>
 
         <p className={styles.legal}>
-          Ao continuar, você concorda com nossos termos de uso
-          e política de privacidade.
+          Ao continuar, você concorda com nossos termos de uso e política de
+          privacidade.
         </p>
       </section>
     </main>

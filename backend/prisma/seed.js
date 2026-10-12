@@ -1,4 +1,3 @@
-
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
 
@@ -42,19 +41,19 @@ const genres = [
 const covers = {
   'Abbey Road': '/images/abbeyroad.jpg',
   'Kind of Blue': '/images/KindofBlue.jpg',
-  'Rumours': '/images/Rumours.png',
+  Rumours: '/images/Rumours.png',
   'The Dark Side of the Moon': '/images/Dark_Side_of_the_Moon.png',
   'Blue Train': '/images/bluetrain.jpg',
   'Born Under a Bad Sign': '/images/BornUnder.jpg',
-  'Gita': '/images/Gita.jpg',
+  Gita: '/images/Gita.jpg',
   'Elis & Tom': '/images/Elis_Regina.jpg',
-  'Smack Yo\'': '/images/smack_yo.jpg',
-  'Warning': '/images/Warning.jpg',
-  'Thriller': '/images/Thriller.jpg',
+  "Smack Yo'": '/images/smack_yo.jpg',
+  Warning: '/images/Warning.jpg',
+  Thriller: '/images/Thriller.jpg',
   'Future Nostalgia': '/images/Future_Nostalgia.png',
-  'Illmatic': '/images/Illmatic.jpg',
+  Illmatic: '/images/Illmatic.jpg',
   'The Chronic': '/images/The_Chronic.jpg',
-  'Legend': '/images/Legend.jpg',
+  Legend: '/images/Legend.jpg',
   'Catch a Fire': '/images/CatchaFire.jpg',
 };
 

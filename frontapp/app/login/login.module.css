@@ -20,11 +20,7 @@
   overflow: hidden;
 
   background:
-    linear-gradient(
-      180deg,
-      rgba(25, 22, 18, 0.45),
-      rgba(25, 22, 18, 0.88)
-    ),
+    linear-gradient(180deg, rgba(25, 22, 18, 0.45), rgba(25, 22, 18, 0.88)),
     url("/images/hero-vinyl.jpg");
 
   background-size: cover;
@@ -183,7 +179,9 @@
   font-size: 13px;
   cursor: pointer;
 
-  transition: color 0.2s, border-color 0.2s;
+  transition:
+    color 0.2s,
+    border-color 0.2s;
 }
 
 .tabs button:hover {

@@ -18,9 +18,7 @@ function normalize(text: string) {
     .toLocaleLowerCase("pt-BR");
 }
 
-export default async function ArtistsPage({
-  searchParams,
-}: ArtistsPageProps) {
+export default async function ArtistsPage({ searchParams }: ArtistsPageProps) {
   const params = await searchParams;
 
   const rawSearch = Array.isArray(params.search)
@@ -63,9 +61,7 @@ export default async function ArtistsPage({
         <header className={styles.heading}>
           <span className={styles.eyebrow}>QUEM FAZ A MÚSICA</span>
           <h1>Artistas</h1>
-          <p>
-            Conheça os nomes por trás dos discos da nossa coleção.
-          </p>
+          <p>Conheça os nomes por trás dos discos da nossa coleção.</p>
         </header>
 
         <form className={styles.filters} action="/artists">
@@ -112,9 +108,7 @@ export default async function ArtistsPage({
                     </span>
 
                     <div className={styles.cardBody}>
-                      <span className={styles.country}>
-                        {artist.country}
-                      </span>
+                      <span className={styles.country}>{artist.country}</span>
 
                       <h2>{artist.name}</h2>
 

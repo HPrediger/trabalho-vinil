@@ -11,19 +11,19 @@ import { GenresModule } from './genres/genres.module';
 import { VinylRecordsModule } from './vinyl-records/vinyl-records.module';
 
 @Module({
-    imports: [
-        ConfigModule.forRoot({
-            isGlobal: true,
-        }),
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
 
-        DatabaseModule,
+    DatabaseModule,
 
-        AuthModule,
-        UsersModule,
-        ProfilesModule,
-        ArtistsModule,
-        GenresModule,
-        VinylRecordsModule,
-    ],
+    AuthModule,
+    UsersModule,
+    ProfilesModule,
+    ArtistsModule,
+    GenresModule,
+    VinylRecordsModule,
+  ],
 })
 export class AppModule {}

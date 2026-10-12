@@ -88,8 +88,7 @@ function findMatches(
 
   return matches
     .sort(
-      (a, b) =>
-        a.score - b.score || a.value.localeCompare(b.value, "pt-BR"),
+      (a, b) => a.score - b.score || a.value.localeCompare(b.value, "pt-BR"),
     )
     .slice(0, limit);
 }

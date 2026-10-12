@@ -12,9 +12,7 @@ interface VinylsPageProps {
   }>;
 }
 
-export default async function VinylsPage({
-  searchParams,
-}: VinylsPageProps) {
+export default async function VinylsPage({ searchParams }: VinylsPageProps) {
   const params = await searchParams;
   const rawSearch = Array.isArray(params.search)
     ? params.search[0]
@@ -64,9 +62,7 @@ export default async function VinylsPage({
         <header className={styles.heading}>
           <span className={styles.eyebrow}>EXPLORE A COLEÇÃO</span>
           <h1>Todos os vinis</h1>
-          <p>
-            Clássicos, descobertas e álbuns especiais para sua coleção.
-          </p>
+          <p>Clássicos, descobertas e álbuns especiais para sua coleção.</p>
         </header>
 
         <form className={styles.filters} action="/vinyls">
@@ -78,7 +74,7 @@ export default async function VinylsPage({
             suggestions={suggestions}
             className={styles.search}
           />
-          
+
           <select
             name="genreId"
             defaultValue={genreId ?? ""}
@@ -104,9 +100,7 @@ export default async function VinylsPage({
               : "discos encontrados"}
           </span>
 
-          {(search || genreId) && (
-            <a href="/vinyls">Limpar filtros ×</a>
-          )}
+          {(search || genreId) && <a href="/vinyls">Limpar filtros ×</a>}
         </div>
 
         {filteredVinyls.length > 0 ? (
@@ -118,9 +112,7 @@ export default async function VinylsPage({
         ) : (
           <div className={styles.empty}>
             <h2>Nenhum disco encontrado</h2>
-            <p>
-              Tente buscar outro álbum ou artista, ou escolha outro gênero.
-            </p>
+            <p>Tente buscar outro álbum ou artista, ou escolha outro gênero.</p>
             <Link href="/vinyls">...</Link>
           </div>
         )}

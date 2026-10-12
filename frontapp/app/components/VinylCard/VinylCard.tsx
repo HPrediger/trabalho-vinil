@@ -34,9 +34,7 @@ export default function VinylCard({ vinyl }: VinylCardProps) {
             </div>
           )}
 
-          <span className={styles.genre}>
-            {vinyl.genre}
-          </span>
+          <span className={styles.genre}>{vinyl.genre}</span>
         </div>
 
         <div className={styles.info}>
@@ -45,9 +43,7 @@ export default function VinylCard({ vinyl }: VinylCardProps) {
             <p>{vinyl.artist}</p>
           </div>
 
-          <strong>
-            R$ {vinyl.price.toFixed(2).replace(".", ",")}
-          </strong>
+          <strong>R$ {vinyl.price.toFixed(2).replace(".", ",")}</strong>
         </div>
 
         <div className={styles.details}>

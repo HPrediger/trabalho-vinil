@@ -1,6 +1,6 @@
 import "server-only";
 
-const API_URL = process.env.API_URL ?? "http://localhost:3000/api";
+export const API_URL = process.env.API_URL ?? "http://localhost:3000/api";
 
 export interface Vinyl {
   id: number;
@@ -11,6 +11,9 @@ export interface Vinyl {
   price: number;
   condition: string;
   rpmSpeed: number;
+  stockQuantity: number;
+  artistId: number;
+  genreId: number;
   coverUrl?: string | null;
 }
 
@@ -28,6 +31,9 @@ interface ApiVinylRecord {
   price: string | number; // Decimal chega como string
   condition: string;
   rpmSpeed: number;
+  stockQuantity: number;
+  artistId: number;
+  genreId: number;
   coverUrl?: string | null;
   artist: { name: string };
   genre: { name: string };
@@ -43,6 +49,9 @@ function toVinyl(record: ApiVinylRecord): Vinyl {
     price: Number(record.price),
     condition: record.condition,
     rpmSpeed: record.rpmSpeed,
+    stockQuantity: record.stockQuantity,
+    artistId: record.artistId,
+    genreId: record.genreId,
     coverUrl: record.coverUrl,
   };
 }
@@ -154,19 +163,18 @@ export async function getArtists(): Promise<Artist[]> {
   return response.json();
 }
 
-
 // ---------- Detalhe do disco ----------
 
 export interface VinylDetail extends Vinyl {
-  stockQuantity: number;
   genreId: number;
+  artistId: number;
   artistCountry: string;
   artistBio: string;
 }
 
 interface ApiVinylRecordDetail extends ApiVinylRecord {
-  stockQuantity: number;
   genreId: number;
+  artistId: number;
   artist: { name: string; country: string; bio: string };
 }
 
@@ -188,9 +196,44 @@ export async function getVinyl(id: number): Promise<VinylDetail | null> {
 
   return {
     ...toVinyl(data),
-    stockQuantity: data.stockQuantity,
     genreId: data.genreId,
+    artistId: data.artistId,
     artistCountry: data.artist.country,
     artistBio: data.artist.bio,
   };
+}
+
+// ---------- Artista e gênero individuais (admin) ----------
+
+// Devolvem null quando não existem (404)
+export async function getArtist(id: number): Promise<Artist | null> {
+  const response = await fetch(`${API_URL}/artists/${id}`, {
+    cache: "no-store",
+  });
+
+  if (response.status === 404) {
+    return null;
+  }
+
+  if (!response.ok) {
+    throw new Error("Falha ao buscar artista");
+  }
+
+  return response.json();
+}
+
+export async function getGenre(id: number): Promise<Genre | null> {
+  const response = await fetch(`${API_URL}/genres/${id}`, {
+    cache: "no-store",
+  });
+
+  if (response.status === 404) {
+    return null;
+  }
+
+  if (!response.ok) {
+    throw new Error("Falha ao buscar gênero");
+  }
+
+  return response.json();
 }

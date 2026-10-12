@@ -1,7 +1,7 @@
 import {
-    ConflictException,
-    Injectable,
-    NotFoundException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 
 import { PrismaService } from '../database/prisma.service';
@@ -10,116 +10,98 @@ import { UpdateGenreDto } from '../dtos/update-genre-dto';
 
 @Injectable()
 export class GenresService {
-    constructor(
-        private prisma: PrismaService,
-    ) { }
+  constructor(private prisma: PrismaService) {}
 
-    async create(dto: CreateGenreDto) {
-        const existingGenre =
-            await this.prisma.genre.findUnique({
-                where: {
-                    name: dto.name,
-                },
-            });
+  async create(dto: CreateGenreDto) {
+    const existingGenre = await this.prisma.genre.findUnique({
+      where: {
+        name: dto.name,
+      },
+    });
 
-        if (existingGenre) {
-            throw new ConflictException(
-                'Gênero já cadastrado',
-            );
-        }
-
-        return await this.prisma.genre.create({
-            data: {
-                name: dto.name,
-                description: dto.description,
-            },
-        });
+    if (existingGenre) {
+      throw new ConflictException('Gênero já cadastrado');
     }
 
-    async findAll() {
-        return await this.prisma.genre.findMany({
-            orderBy: {
-                name: 'asc',
-            },
-        });
+    return await this.prisma.genre.create({
+      data: {
+        name: dto.name,
+        description: dto.description,
+      },
+    });
+  }
+
+  async findAll() {
+    return await this.prisma.genre.findMany({
+      orderBy: {
+        name: 'asc',
+      },
+    });
+  }
+
+  async findOne(id: number) {
+    const genre = await this.prisma.genre.findUnique({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!genre) {
+      throw new NotFoundException('Gênero não encontrado');
     }
 
-    async findOne(id: number) {
-        const genre =
-            await this.prisma.genre.findUnique({
-                where: {
-                    id: id,
-                },
-            });
+    return genre;
+  }
 
-        if (!genre) {
-            throw new NotFoundException(
-                'Gênero não encontrado',
-            );
-        }
+  async update(id: number, dto: UpdateGenreDto) {
+    await this.findOne(id);
 
-        return genre;
+    if (dto.name) {
+      const existingGenre = await this.prisma.genre.findUnique({
+        where: {
+          name: dto.name,
+        },
+      });
+
+      if (existingGenre && existingGenre.id !== id) {
+        throw new ConflictException('Gênero já cadastrado');
+      }
     }
 
-    async update(
-        id: number,
-        dto: UpdateGenreDto,
-    ) {
-        await this.findOne(id);
+    return await this.prisma.genre.update({
+      where: {
+        id: id,
+      },
+      data: {
+        name: dto.name,
+        description: dto.description,
+      },
+    });
+  }
 
-        if (dto.name) {
-            const existingGenre =
-                await this.prisma.genre.findUnique({
-                    where: {
-                        name: dto.name,
-                    },
-                });
+  async remove(id: number) {
+    await this.findOne(id);
 
-            if (
-                existingGenre &&
-                existingGenre.id !== id
-            ) {
-                throw new ConflictException(
-                    'Gênero já cadastrado',
-                );
-            }
-        }
+    const vinylCount = await this.prisma.vinylRecord.count({
+      where: {
+        genreId: id,
+      },
+    });
 
-        return await this.prisma.genre.update({
-            where: {
-                id: id,
-            },
-            data: {
-                name: dto.name,
-                description: dto.description,
-            },
-        });
+    if (vinylCount > 0) {
+      throw new ConflictException(
+        'Não é possível remover um gênero que possui discos cadastrados',
+      );
     }
 
-    async remove(id: number) {
-        await this.findOne(id);
+    await this.prisma.genre.delete({
+      where: {
+        id: id,
+      },
+    });
 
-        const vinylCount =
-            await this.prisma.vinylRecord.count({
-                where: {
-                    genreId: id,
-                },
-            });
-
-        if (vinylCount > 0) {
-            throw new ConflictException(
-                'Não é possível remover um gênero que possui discos cadastrados',
-            );
-        }
-
-        await this.prisma.genre.delete({
-            where: {
-                id: id,
-            },
-        });
-
-        return {
-            message: 'Gênero removido com sucesso',
-        };
-    }
+    return {
+      message: 'Gênero removido com sucesso',
+    };
+  }
 }
